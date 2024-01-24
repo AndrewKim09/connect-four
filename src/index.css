@@ -10,3 +10,46 @@
 body{
     font-family: "Space Grotesk Medium"
 }
+
+.image{
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.backboard{
+    background-image: url("./assets/images/board-layer-black-large.svg");
+    background-position: top;
+}
+
+.frontboard{
+    background-image: url("./assets/images/board-layer-white-large.svg");
+    background-position: top;
+}
+
+.logo{
+    background-image: url("./assets/images/logo.svg");
+}
+
+.leftPlayerImage{
+    background-image: url("./assets/images/player-one.svg");
+}
+
+.rightPlayerImage{
+    background-image: url("./assets/images/player-two.svg");
+}
+
+.redTurnBackground{
+    background-image: url("./assets/images/turn-background-red.svg");
+}
+
+.yellowTurnBackground{
+    background-image: url("./assets/images/turn-background-yellow.svg");
+}
+
+.redPicker{
+    background-image: url("./assets/images/marker-red.svg");
+}
+.yellowPicker{
+    background-image: url("./assets/images/marker-yellow.svg");
+}
