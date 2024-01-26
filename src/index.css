@@ -53,3 +53,21 @@ body{
 .yellowPicker{
     background-image: url("./assets/images/marker-yellow.svg");
 }
+
+.pieces{
+    div{
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+}
+
+.red{
+    background-image: url("./assets/images/counter-red-large.svg");
+}
+
+.col-1{
+    margin-left: 2.1vh;
+    margin-top: 2vh;
+    margin-bottom: -0.2vh;
+    margin-right: 0.1vh;
+}
