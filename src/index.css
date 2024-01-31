@@ -17,6 +17,14 @@ body{
     background-position: center;
 }
 
+.playVsPlayerImage{
+    background-image: url("./assets/images/player-vs-player.svg")
+}
+
+.homeLogo{
+    background-image: url("./assets/images/logo.svg")
+}
+
 .backboard{
     background-image: url("./assets/images/board-layer-black-large.svg");
     background-position: top;
