@@ -1,10 +1,37 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import $ from 'jquery'
 
 export const PlayVsPlayer = () => {
+  const [redTurn, setRedTurn] = useState(true)
+  const [timer, setTimer] = useState(15);
+  const [startTime, setStartTime] = useState({});
+  const MAXTIME = 15;
+
+  useEffect(() => {
+    const newTime = new Date().getTime();
+    console.log("newTime: " + newTime)
+    setStartTime(newTime);
+    console.log("startTime: " + startTime)
+  }, [redTurn])
+
   useEffect(() => {
 
     $(document).ready(function() {
+
+      setInterval(function() {
+        console.log("startTime: " + startTime)
+
+        var now = new Date().getTime();
+        var distance = now - startTime;
+        console.log("" + now - startTime )
+        setTimer(MAXTIME - Math.floor(distance / 1000));
+
+        if(Math.floor(distance / 1000) > 15){
+          setRedTurn(!redTurn)
+        }
+      }, 1000)
+
+
       $(".col-1").each(function() {
         $(this).hover(function() {
           $(".picker1").removeClass("hidden")
@@ -13,6 +40,17 @@ export const PlayVsPlayer = () => {
           $(".picker1").addClass("hidden")
         }
         )
+
+        $(this).on("click",function() {
+          for(let i = 1 ; i <= 7 ;i++){
+            if($(".row-"+i+".col-1").hasClass("empty")){
+              
+              $(".row-"+i+".col-1").removeClass("empty")
+              $(".row-"+i+".col-1").addClass("red")
+              break;
+            }
+          }
+        })
       });
 
       $(".col-2").each(function() {
@@ -104,67 +142,69 @@ export const PlayVsPlayer = () => {
             <div role="backboard" className="backboard image h-[70.67vh] aspect-[632/636]"/>
             <div role="frontboard" className="frontboard image h-[70.67vh] aspect-[632/636] absolute"/>
 
-            <div role="pieces" className="absolute h-[70.67vh] aspect-[632/636] grid grid-cols-7 grid-rows-6 pb-[15%]">
-              <div className="row-7 col-1"></div>
-              <div className="row-7 col-2"></div>
-              <div className="row-7 col-3"></div>
-              <div className="row-7 col-4"></div>
-              <div className="row-7 col-5"></div>
-              <div className="row-7 col-6"></div>
-              <div className="row-7 col-7"></div>
+            <div role="pieces" className="pieces absolute h-[70.67vh] aspect-[632/636] grid grid-cols-7 grid-rows-6 pb-[15%] cursor-pointer">
+              <div className="row-7 col-1 empty"></div>
+              <div className="row-7 col-2 empty"></div>
+              <div className="row-7 col-3 empty"></div>
+              <div className="row-7 col-4 empty"></div>
+              <div className="row-7 col-5 empty"></div>
+              <div className="row-7 col-6 empty"></div>
+              <div className="row-7 col-7 empty"></div>
 
-              <div className="row-6 col-1"></div>
-              <div className="row-6 col-2"></div>
-              <div className="row-6 col-3"></div>
-              <div className="row-6 col-4"></div>
-              <div className="row-6 col-5"></div>
-              <div className="row-6 col-6"></div>
-              <div className="row-6 col-7"></div>
+              <div className="row-6 col-1 empty"></div>
+              <div className="row-6 col-2 empty"></div>
+              <div className="row-6 col-3 empty"></div>
+              <div className="row-6 col-4 empty"></div>
+              <div className="row-6 col-5 empty"></div>
+              <div className="row-6 col-6 empty"></div>
+              <div className="row-6 col-7 empty"></div>
               
-              <div className="row-5 col-1"></div>
-              <div className="row-5 col-2"></div>
-              <div className="row-5 col-3"></div>
-              <div className="row-5 col-4"></div>
-              <div className="row-5 col-5"></div>
-              <div className="row-5 col-6"></div>
-              <div className="row-5 col-7"></div>
+              <div className="row-5 col-1 empty"></div>
+              <div className="row-5 col-2 empty"></div>
+              <div className="row-5 col-3 empty"></div>
+              <div className="row-5 col-4 empty"></div>
+              <div className="row-5 col-5 empty"></div>
+              <div className="row-5 col-6 empty"></div>
+              <div className="row-5 col-7 empty"></div>
               
-              <div className="row-4 col-1"></div>
-              <div className="row-4 col-2"></div>
-              <div className="row-4 col-3"></div>
-              <div className="row-4 col-4"></div>
-              <div className="row-4 col-5"></div>
-              <div className="row-4 col-6"></div>
-              <div className="row-4 col-7"></div>
+              <div className="row-4 col-1 empty"></div>
+              <div className="row-4 col-2 empty"></div>
+              <div className="row-4 col-3 empty"></div>
+              <div className="row-4 col-4 empty"></div>
+              <div className="row-4 col-5 empty"></div>
+              <div className="row-4 col-6 empty"></div>
+              <div className="row-4 col-7 empty"></div>
               
-              <div className="row-3 col-1"></div>
-              <div className="row-3 col-2"></div>
-              <div className="row-3 col-3"></div>
-              <div className="row-3 col-4"></div>
-              <div className="row-3 col-5"></div>
-              <div className="row-3 col-6"></div>
-              <div className="row-3 col-7"></div>
+              <div className="row-3 col-1 empty"></div>
+              <div className="row-3 col-2 empty"></div>
+              <div className="row-3 col-3 empty"></div>
+              <div className="row-3 col-4 empty"></div>
+              <div className="row-3 col-5 empty"></div>
+              <div className="row-3 col-6 empty"></div>
+              <div className="row-3 col-7 empty"></div>
               
-              <div className="row-2 col-1"></div>
-              <div className="row-2 col-2"></div>
-              <div className="row-2 col-3"></div>
-              <div className="row-2 col-4"></div>
-              <div className="row-2 col-5"></div>
-              <div className="row-2 col-6"></div>
-              <div className="row-2 col-7"></div>
+              <div className="row-2 col-1 empty"></div>
+              <div className="row-2 col-2 empty"></div>
+              <div className="row-2 col-3 empty"></div>
+              <div className="row-2 col-4 empty"></div>
+              <div className="row-2 col-5 empty"></div>
+              <div className="row-2 col-6 empty"></div>
+              <div className="row-2 col-7 empty"></div>
               
-              <div className="row-1 col-1"></div>
-              <div className="row-1 col-2"></div>
-              <div className="row-1 col-3"></div>
-              <div className="row-1 col-4"></div>
-              <div className="row-1 col-5"></div>
-              <div className="row-1 col-6"></div>
-              <div className="row-1 col-7"></div>
+              <div className="row-1 col-1 empty"></div>
+              <div className="row-1 col-2 empty"></div>
+              <div className="row-1 col-3 empty"></div>
+              <div className="row-1 col-4 empty"></div>
+              <div className="row-1 col-5 empty"></div>
+              <div className="row-1 col-6 empty"></div>
+              <div className="row-1 col-7 empty"></div>
             </div>
 
 
 
-              <div className ="redTurnBackground image h-[16.67vh] absolute bottom-[-10%] w-[100%]">
+              <div className ="redTurnBackground image h-[16.67vh] absolute bottom-[-10%] w-[30%] ml-[35%] flex flex-col">
+                <p className='text-HeadingXs mt-[20%] text-center'>{redTurn ? "PLAYER 1'S TURN" : "PLAYER 2'S TURN"}</p>
+                <p className="text-center text-HeadingLg">{timer}</p>
               </div>
 
               <div className="hidden picker picker1 redPicker image absolute h-[3.3vh] top-[-3%] ml-[4vh] aspect-square ">
