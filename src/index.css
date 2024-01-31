@@ -33,6 +33,8 @@ body{
 .frontboard{
     background-image: url("./assets/images/board-layer-white-large.svg");
     background-position: top;
+
+
 }
 
 .logo{
@@ -65,7 +67,7 @@ body{
 .pieces{
     div{
         background-repeat: no-repeat;
-        background-size: contain;
+        background-size: fill;
     }
 }
 
@@ -73,9 +75,64 @@ body{
     background-image: url("./assets/images/counter-red-large.svg");
 }
 
+.yellow{
+    background-image: url("./assets/images/counter-yellow-large.svg");
+
+}
+
 .col-1{
-    margin-left: 2.1vh;
+    margin-left: 1.9vh;
+    margin-right: .5vh;
+}
+
+.col-2{
+    margin-left: 1.7vh;
+    margin-right: .8vh;
+}
+
+.col-3{
+    margin-left: 1.5vh;
+    margin-right: .8vh;
+}
+
+.col-4{
+    margin-left: 1.2vh;
+    margin-right: .8vh;
+}
+
+.col-5{
+    margin-left: 1vh;
+    margin-right: .8vh;
+}
+
+.col-6{
+    margin-left: .8vh;
+}
+
+.col-7{
+    margin-left: .6vh;
+}
+
+.row-1{
+    margin-bottom: .4vh;
     margin-top: 2vh;
-    margin-bottom: -0.2vh;
-    margin-right: 0.1vh;
+}
+
+.row-2{
+    margin-top: 1.6vh;
+}
+
+.row-3{
+    margin-top: 1.4vh;
+}
+
+.row-4{
+    margin-top: 1.2vh;
+}
+
+.row-5{
+    margin-top: 1vh;
+}
+.row-6{
+    margin-top: .8vh;
 }
