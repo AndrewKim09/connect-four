@@ -14,14 +14,19 @@ export const PlayVsPlayer = () => {
     console.log("checking for win");
     console.log(redTurn ? "red" : "yellow")
     var horizontalPieces = []
+    var horizontalString =""
     var verticalPieces = []
+    var verticalString = ""
     var diagonalPieces = [] //from top left to bottom right
+    var diagonalString = ""
     var secondDiagonalPieces = [] //from bottom left to top right
+    var secondDiagonalString = ""
 
     //get horizontal and vertical
     for(let i = 1; i < 8; i++){
-      horizontalPieces.push($(".row-"+lastMove.row+".col-"+i).hasClass(redTurn ? "red" : "yellow") == redTurn)
-      verticalPieces.push($(".row-"+i+".col-"+lastMove.column).hasClass(redTurn ? "red" : "yellow") == redTurn);
+      horizontalPieces.push($(".row-"+lastMove.row+".col-"+i).hasClass(redTurn ? "red" : "yellow") == redTurn);
+      if(i < 7)
+        verticalPieces.push($(".row-"+i+".col-"+lastMove.column).hasClass(redTurn ? "red" : "yellow") == redTurn);
     }
 
     //get top left to bottom right
@@ -52,7 +57,41 @@ export const PlayVsPlayer = () => {
     console.log(diagonalPieces);
     console.log(secondDiagonalPieces);
 
+    for(let i = 0; i <= 7; i++){
+      horizontalString += horizontalPieces[i];
+      if(i < 7)
+        verticalString += verticalPieces[i]
+    }
 
+    for(let i = 0; i < diagonalPieces.length; i++){
+      diagonalString += diagonalPieces[i];
+      secondDiagonalString += secondDiagonalPieces[i];
+    }
+
+
+    if(redTurn){
+      if(horizontalString.includes("true".repeat(4)) || verticalString.includes("true".repeat(4)) || diagonalString.includes("true".repeat(4)) || secondDiagonalString.includes("true".repeat(4))){
+        console.log("WINNER")
+        if(redTurn){
+          setPlayerTurnText("PLAYER 1 WINS")
+        }
+        else{
+          setPlayerTurnText("PLAYER 2 WINS")
+        }
+      }
+    }
+
+    else{
+      if(horizontalString.includes("false".repeat(4)) || verticalString.includes("false".repeat(4)) || diagonalString.includes("false".repeat(4)) || secondDiagonalString.includes("false".repeat(4))){
+        console.log("WINNER")
+        if(redTurn){
+          setPlayerTurnText("PLAYER 1 WINS")
+        }
+        else{
+          setPlayerTurnText("PLAYER 2 WINS")
+        }
+      }
+    }
   }
 
   const switchTurns = () => {
