@@ -67,7 +67,7 @@ body{
 .pieces{
     div{
         background-repeat: no-repeat;
-        background-size: fill;
+        background-size: contain;
     }
 }
 
@@ -87,7 +87,7 @@ body{
 
 .col-2{
     margin-left: 1.7vh;
-    margin-right: .8vh;
+    margin-right: .6vh;
 }
 
 .col-3{
@@ -97,37 +97,38 @@ body{
 
 .col-4{
     margin-left: 1.2vh;
-    margin-right: .8vh;
+    margin-right: 1.1vh;
 }
 
 .col-5{
     margin-left: 1vh;
-    margin-right: .8vh;
+    margin-right: 1.2vh;
 }
 
 .col-6{
     margin-left: .8vh;
+    margin-right: 1.5vh;
 }
 
 .col-7{
     margin-left: .6vh;
+    margin-right: 1.7vh;
 }
 
 .row-1{
-    margin-bottom: .4vh;
-    margin-top: 2vh;
+    margin-top: 1.5vh;
 }
 
 .row-2{
-    margin-top: 1.6vh;
+    margin-top: 1.5vh;
 }
 
 .row-3{
-    margin-top: 1.4vh;
+    margin-top: 1.3vh;
 }
 
 .row-4{
-    margin-top: 1.2vh;
+    margin-top: 1.1vh;
 }
 
 .row-5{
@@ -135,4 +136,44 @@ body{
 }
 .row-6{
     margin-top: .8vh;
+}
+
+.winningPiece{
+    width: 3.78vh;
+    height: 3.78vh;
+    border-radius: 50%;
+    border-width: 4px;
+    border-style: solid;
+    border-color: white;
+    background-color: transparent;
+    margin: auto;
+    margin-top: 1.67vh;
+}
+
+.winningBox{
+    background-color: white;
+    border-radius: 2vh;
+    border-width: 2px;
+    border-style: solid;
+    border-color: black;
+    width: 31.67vh;
+    height: 17.77vh;
+    /*shadow-[0_3px_0_5px_rgba(0,0,0)]*/
+    margin: auto;
+    margin-top: 2.5vh;
+    box-shadow: 0px 10px 0px 0px black;
+
+}
+
+@keyframes bottomUp{
+    0%{
+        transform: translateY(100%);
+    }
+    100%{
+        transform: translateY(0%);
+    }
+}
+
+.bottomUpAnimation{
+    animation: bottomUp 1s ease-in-out;
 }
