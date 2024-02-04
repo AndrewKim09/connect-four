@@ -1,18 +1,46 @@
 import React, { useEffect, useState } from 'react'
 import $ from 'jquery'
+import { PauseMenu } from './PauseMenu';
 
 export const PlayVsPlayer = () => {
   var redTurn = true;
-  const [playerTurnText, setPlayerTurnText] = useState("PLAYER 1'S TURN");// w-[3.78vh] aspect-square rounded-full border-4 border-solid border-white bg-transparent m-auto mt-[1.67vh]
+  const [playerTurnText, setPlayerTurnText] = useState("PLAYER 1'S TURN");
+  const [pauseMenu, setPauseMenu] = useState(false);
+  var playerOneScore = 0;
+  var playerTwoScore = 0;
+  const [playerOneScoreView, setPlayerOneScoreView] = useState(0);
+  const [playerTwoScoreView, setPlayerTwoScoreView] = useState(0);
   var lastMove;
   var timePassed = 0;
   var winner = false;
+  var pause = false;
   var nextPlayer;
   const [timer, setTimer] = useState("15");
   const MAXTIME = 15;
   var piecesPlayed = 0;
+  
+  const onMenuClick = () => {
+    pause = true;
+    setPauseMenu(true);
+  }
 
   const findWinningPieces = (pieces, bool) => {
+    $(".bottomColor").addClass("bottomUpAnimation")
+      $(".turn").addClass("bottomUpAnimation")
+      $(".playAgainBox").removeClass("hidden");
+      $(".turn").addClass("winningBox")
+      $(".playerText").removeClass("mt-[20%]");
+      $(".playerText").addClass("mt-[1.9vh]");
+      
+      if($(".turn").hasClass("redTurnBackground")){
+        nextPlayer = "PLAYER 1";
+        $(".turn").removeClass("redTurnBackground")
+      }
+      else{
+        nextPlayer = "PLAYER 2";
+        $(".turn").removeClass("yellowTurnBackground")
+      }
+      
     console.log("finding winning pieces")
     for(let i = 0; i < pieces.length - 3; i++){
       if(pieces.slice(i, i+4).every((piece) => piece.hasClass(redTurn ? "red" : "yellow") == redTurn == bool)){
@@ -33,25 +61,44 @@ export const PlayVsPlayer = () => {
       $(this).addClass("empty")
       $(this).children().removeClass("winningPiece")
     });
+    piecesPlayed = 0;
 
     $(".bottomColor").removeClass("bottomUpAnimation")
-      $(".turn").removeClass("bottomUpAnimation")
-    
+    $(".turn").removeClass("bottomUpAnimation")
     $(".playAgainBox").addClass("hidden");
     $(".bottomColor").removeClass("bg-redPlayer")
     $(".bottomColor").removeClass("bg-yellowPlayer")
     $(".bottomColor").addClass("bg-darkPurple")
     $(".turn").removeClass("winningBox")
     $(".playerText").removeClass("mt-[1.9vh]");
-      $(".playerText").addClass("mt-[20%]");
+    $(".playerText").addClass("mt-[20%]");
+
+
+
     if(nextPlayer == "PLAYER 1"){
       redTurn = false;
-
+      $(".turn").addClass("yellowTurnBackground")
+      $(".picker").each(function() {
+        $(this).removeClass("redPicker")
+        $(this).addClass("yellowPicker")
+      })
+      setPlayerTurnText("PLAYER 2'S TURN");
     }
     else{
       redTurn = true;
+      $(".turn").addClass("redTurnBackground")
+      $(".picker").each(function() {
+        $(this).removeClass("yellowPicker")
+        $(this).addClass("redPicker")
+      })
+      setPlayerTurnText("PLAYER 1'S TURN");
     } 
-    winner = false
+
+
+    timePassed = 0;
+    setTimer("15");
+    winner = false;
+    pause = false;
   }
 
   const checkWin = () => {
@@ -126,6 +173,10 @@ export const PlayVsPlayer = () => {
         setTimer("WINS");
         $(".bottomColor").removeClass("bg-darkPurple")
         $(".bottomColor").addClass("bg-redPlayer")
+        winner = true;
+        pause = true;
+        playerOneScore = (playerOneScore + 1);
+        setPlayerOneScoreView(playerOneScore);
 
         if(horizontalString.includes("true".repeat(4))){
           findWinningPieces(horizontalPieces, true)
@@ -141,8 +192,6 @@ export const PlayVsPlayer = () => {
         else if(secondDiagonalString.includes("true".repeat(4))){
           findWinningPieces(secondDiagonalPieces, true)
         }
-
-        winner = true;
       }
     }
 
@@ -154,6 +203,9 @@ export const PlayVsPlayer = () => {
           $(".bottomColor").removeClass("bg-darkPurple")
           $(".bottomColor").addClass("bg-yellowPlayer")
           winner = true;
+          pause = true;
+          playerTwoScore = (playerTwoScore + 1);
+          setPlayerTwoScoreView(playerTwoScore);
 
           if(horizontalString.includes("false".repeat(4))){
             findWinningPieces(horizontalPieces, false, "horizontal");
@@ -173,25 +225,6 @@ export const PlayVsPlayer = () => {
 
       }
     }
-
-    if(winner){
-
-      $(".bottomColor").addClass("bottomUpAnimation")
-      $(".turn").addClass("bottomUpAnimation")
-
-      $(".playAgainBox").removeClass("hidden");
-      $(".turn").addClass("winningBox")
-      $(".playerText").removeClass("mt-[20%]");
-      $(".playerText").addClass("mt-[1.9vh]");
-      if($(".turn").hasClass("redTurnBackground")){
-        nextPlayer = "PLAYER 1";
-        $(".turn").removeClass("redTurnBackground")
-      }
-      else{
-        nextPlayer = "PLAYER 2";
-        $(".turn").removeClass("yellowTurnBackground")
-      }
-    }
   }
 
   const switchTurns = () => {
@@ -200,7 +233,7 @@ export const PlayVsPlayer = () => {
     console.log("Switching turns")
     timePassed = 0;
     setTimer("15")
-    if(!winner){
+    if(!pause){
       if(redTurn){
         console.log("Switching to red")
         $(".picker").each(function() {
@@ -226,19 +259,20 @@ export const PlayVsPlayer = () => {
 
   }
 
+
   useEffect(() => {
 
     $(document).ready(function() {
 
+      setInterval(function() { //TIMER
 
-      setInterval(function() {
-        if(!winner){
+        if(!pause){
           timePassed += 1;
           setTimer("" + ( MAXTIME - timePassed))
-        }
-
-        if(timePassed > 15){
-          switchTurns();
+  
+          if(timePassed > 15){
+            switchTurns();
+          }
         }
       }, 1000)
 
@@ -279,6 +313,18 @@ export const PlayVsPlayer = () => {
 
         })
       })
+
+      $(".playAgainBox").on("click", function() {
+        resetBoard();
+      })
+
+      $(".menu").on("click", function() {
+        console.log("menu")
+      })
+
+      $(".restart").on("click", function() {  
+        resetBoard();
+      })
       
 
     })
@@ -287,14 +333,15 @@ export const PlayVsPlayer = () => {
 
   return (
     <div role="Bodywrapper" className="flex flex-col items-center w-[100%] h-[100%] min-h-[100vh]">
+      {pauseMenu? <PauseMenu/>: ""}
         <div className="flex justify-between w-full mt-[53px] items-center">
-            <button className="text-center w-[86px] h-[39px] bg-darkPurple rounded-[5000px] text-HeadingXs text-white ml-[28%]">
+            <button onClick={() => {onMenuClick()}} className="text-center w-[86px] h-[39px] bg-darkPurple rounded-[5000px] text-HeadingXs text-white ml-[28%]">
                 MENU
             </button>
 
             <div alt="logo" className="image logo w-[52px] h-[52px]"></div>
 
-            <button className="text-center h-[39px] px-[20px] bg-darkPurple rounded-[5000px] text-HeadingXs text-white mr-[28%]">
+            <button className="restart text-center h-[39px] px-[20px] bg-darkPurple rounded-[5000px] text-HeadingXs text-white mr-[28%]">
                 RESTART
             </button>
         </div>
@@ -303,7 +350,7 @@ export const PlayVsPlayer = () => {
           <div role="leftPlayer" className="relative flex flex-col justify-center w-[9.8vw] h-[17.8vh] aspect-[141/160] mr-[60px] bg-white rounded-3xl shadow-[0_3px_0_5px_rgba(0,0,0)]">
             <div role="leftPlayerImage" className="image leftPlayerImage w-[100%] image-center h-[54px] rounded-full absolute top-0 mt-[-27px]"/>
             <p className="text-center text-HeadingSm">PLAYER 1</p>
-            <p className="text-center text-HeadingLg">12</p>
+            <p className="text-center text-HeadingLg">{playerOneScoreView}</p>
           </div>
 
           <div role="gameBoard" className="relative flex w-auto mt-[5.67vh] z-10">
@@ -413,7 +460,7 @@ export const PlayVsPlayer = () => {
               <div role="rightPlayerImage" className="rightPlayerImage image h-[54px] rounded-full absolute top-0 w-[100%] image-center mt-[-27px]"/>
 
               <p className="text-center text-HeadingSm">PLAYER 2</p>
-              <p className="text-center text-HeadingLg">23</p>
+              <p className="text-center text-HeadingLg">{playerTwoScoreView}</p>
           </div>
         </div>
 
