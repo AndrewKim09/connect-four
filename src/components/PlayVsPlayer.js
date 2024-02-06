@@ -20,8 +20,24 @@ export const PlayVsPlayer = () => {
   var piecesPlayed = 0;
   
   const onMenuClick = () => {
-    pause = true;
+    pause = !pause;
+    $(".pauseMenuBackground").toggleClass("hidden");
     setPauseMenu(true);
+  }
+  
+  const onContinue = () => {
+    pause = false;
+    $(".pauseMenuBackground").toggleClass("hidden");
+    setPauseMenu(false);
+  }
+
+  const onRestart = () => {
+    resetBoard();
+    setPauseMenu(false);
+  }
+
+  const onMainMenu = () => {
+    window.location.href = "http://localhost:3000/";
   }
 
   const findWinningPieces = (pieces, bool) => {
@@ -333,37 +349,38 @@ export const PlayVsPlayer = () => {
 
   return (
     <div role="Bodywrapper" className="flex flex-col items-center w-[100%] h-[100%] min-h-[100vh]">
-      {pauseMenu? <PauseMenu/>: ""}
-        <div className="flex justify-between w-full mt-[53px] items-center">
-            <button onClick={() => {onMenuClick()}} className="text-center w-[86px] h-[39px] bg-darkPurple rounded-[5000px] text-HeadingXs text-white ml-[28%]">
+      <div className="fixed top-0 bottom-0 left-0 right-0 z-40 hidden bg-black bg-opacity-50 pauseMenuBackground"></div>
+      {pauseMenu? <PauseMenu onContinue={() => {onContinue()}} onRestart={() => {onRestart()}} onMainMenu={() => {onMainMenu()}}/>: ""}
+        <div className="flex justify-between w-full lg:mt-[53px] md:mt-[2.93vh] items-center md:mb-[3.125vh]">
+            <button onClick={() => {onMenuClick()}} className="text-center w-[86px] h-[39px] bg-darkPurple rounded-[5000px] text-HeadingXs text-white lg:ml-[28%] md:ml-[6.54vh]">
                 MENU
             </button>
 
             <div alt="logo" className="image logo w-[52px] h-[52px]"></div>
 
-            <button className="restart text-center h-[39px] px-[20px] bg-darkPurple rounded-[5000px] text-HeadingXs text-white mr-[28%]">
+            <button className="restart text-center h-[39px] px-[20px] bg-darkPurple rounded-[5000px] text-HeadingXs text-white lg:mr-[28%] md:mr-[6.54vh] lg:m-0">
                 RESTART
             </button>
         </div>
 
-        <div role="gameBoardWrapper" className="flex items-center justify-center align-middle">
-          <div role="leftPlayer" className="relative flex flex-col justify-center w-[9.8vw] h-[17.8vh] aspect-[141/160] mr-[60px] bg-white rounded-3xl shadow-[0_3px_0_5px_rgba(0,0,0)]">
-            <div role="leftPlayerImage" className="image leftPlayerImage w-[100%] image-center h-[54px] rounded-full absolute top-0 mt-[-27px]"/>
+        <div role="gameBoardWrapper" className="inline-flex items-center justify-center align-middle lg:flex-row md:relative md:flex-col">
+          <div role="leftPlayer" className="lg:relative md:absolute lg:px-0 md:px-[4vh] md:top-0 md:left-0 flex lg:flex-col md:flex-row md:items-center md:h-[9.77vh] lg:justify-center md:justify-between lg:w-[9.8vw] lg:h-[17.8vh] md:w-[26.56vh] aspect-[141/160] mr-[60px] bg-white rounded-3xl shadow-[0_3px_0_5px_rgba(0,0,0)] md:order-first">
+            <div role="leftPlayerImage" className="image leftPlayerImage image-center h-[54px] rounded-full md:absolute lg:top-0 lg:left-[50%] lg:translate-x-[-50%] w-[54px] md:left-[-10%] lg:mt-[-15%]"/>
             <p className="text-center text-HeadingSm">PLAYER 1</p>
             <p className="text-center text-HeadingLg">{playerOneScoreView}</p>
           </div>
 
-          <div role="gameBoard" className="relative flex w-auto mt-[5.67vh] z-10">
+          <div role="gameBoard" className="relative flex w-auto lg:mt-[5.67vh] md:mt-[3.55%] z-10">
             
-            <div role="backboard" className="backboard image h-[70.67vh] aspect-[632/636]"/>
-            <div role="frontboard" className="frontboard image h-[70.67vh] aspect-[632/636] absolute z-20"/>
+            <div role="backboard" className="backboard image lg:h-[70.67vh] aspect-[632/636] md:h-[57vh]"/>
+            <div role="frontboard" className="frontboard image lg:h-[70.67vh] aspect-[632/636] md:h-[57vh] absolute z-20"/>
 
-            <div role="pieces" className="pieces absolute h-[70.67vh] aspect-[632/636] grid grid-cols-7 grid-rows-6 pb-[17%] pt-[2%] cursor-pointer">
+            <div role="pieces" className="pieces absolute lg:h-[70.67vh] md:h-[57vh] aspect-[632/636] grid grid-cols-7 grid-rows-6 pb-[17%] pt-[2%] cursor-pointer">
 
               <div className="row-6 col-1 empty" column="1"><div className="row6 col1"></div></div>
               <div className="row-6 col-2 empty" column="2"><div className="row6 col2"></div></div>
-              <div className="row-6 col-4 empty" column="4"><div className="row6 col3"></div></div>
-              <div className="row-6 col-3 empty" column="3"><div className="row6 col4"></div></div>
+              <div className="row-6 col-3 empty" column="4"><div className="row6 col3"></div></div>
+              <div className="row-6 col-4 empty" column="3"><div className="row6 col4"></div></div>
               <div className="row-6 col-5 empty" column="5"><div className="row6 col5"></div></div>
               <div className="row-6 col-6 empty" column="6"><div className="row6 col6"></div></div>
               <div className="row-6 col-7 empty" column="7"><div className="row6 col7"></div></div>
@@ -409,7 +426,7 @@ export const PlayVsPlayer = () => {
               <div className="row-1 col-7 empty" column="7"><div className="row1 col7"></div></div>
             </div>
 
-            <div role="Frontpieces" className="frontPieces absolute h-[70.67vh] aspect-[632/636] grid grid-cols-7 pb-[17%] pt-[2%] cursor-pointer z-40">
+            <div role="Frontpieces" className="frontPieces absolute lg:h-[70.67vh] aspect-[632/636] md:h-[57vh] grid grid-cols-7 lg:pb-[17%] lg:pt-[2%] md:pb-[9%] md:pt-[2.7%] cursor-pointer z-40">
             <div className="col-1" column="1"></div>
             <div className="col-2" column="2"></div>
             <div className="col-3" column="3"></div>
@@ -428,38 +445,38 @@ export const PlayVsPlayer = () => {
               </div>
             </div>
 
-              <div className="hidden picker picker1 redPicker image absolute h-[3.3vh] top-[-3%] ml-[4vh] aspect-square z-30">
+              <div className="hidden picker picker1 redPicker image absolute h-[3.3vh] top-[-3%] lg:ml-[4vh] md:ml-[3vh] aspect-square z-30">
               </div>
 
-              <div className="hidden picker picker2 redPicker image absolute h-[3.3vh] top-[-3%] ml-[14vh] aspect-square z-30">
+              <div className="hidden picker picker2 redPicker image absolute h-[3.3vh] top-[-3%] lg:ml-[14vh] md:ml-[11vh] aspect-square z-30">
               </div>
 
-              <div className="hidden picker picker3 redPicker image absolute h-[3.3vh] top-[-3%] ml-[23.5vh] aspect-square z-30">
+              <div className="hidden picker picker3 redPicker image absolute h-[3.3vh] top-[-3%] lg:ml-[23.5vh] md:ml-[18.7vh] aspect-square z-30">
               </div>
 
-              <div className="hidden picker picker4 redPicker image absolute h-[3.3vh] top-[-3%] ml-[33.5vh] aspect-square z-30">
-              </div>
-
-
-              <div className="hidden picker picker5 redPicker image absolute h-[3.3vh] top-[-3%] ml-[43.3vh] aspect-square z-30">
+              <div className="hidden picker picker4 redPicker image absolute h-[3.3vh] top-[-3%] lg:ml-[33.5vh] md:ml-[26.7vh] aspect-square z-30">
               </div>
 
 
-              <div className="hidden picker picker6 redPicker image absolute h-[3.3vh] top-[-3%] ml-[53vh] aspect-square z-30">
+              <div className="hidden picker picker5 redPicker image absolute h-[3.3vh] top-[-3%] lg:ml-[43.3vh] md:ml-[34.5vh] aspect-square z-30">
               </div>
 
 
-              <div className="hidden picker picker7 redPicker image absolute h-[3.3vh] top-[-3%] ml-[63vh] aspect-square z-30">
+              <div className="hidden picker picker6 redPicker image absolute h-[3.3vh] top-[-3%] lg:ml-[53vh] md:ml-[42.5vh] aspect-square z-30">
+              </div>
+
+
+              <div className="hidden picker picker7 redPicker image absolute h-[3.3vh] top-[-3%] lg:ml-[63vh] md:ml-[50.4vh] aspect-square z-30">
               </div>
 
 
           </div>
 
 
-          <div role="rightPlayer" className="flex flex-col justify-center w-[9.8vw] h-[17.8vh] aspect-[141/160] ml-[60px] bg-white rounded-3xl shadow-[0_3px_0_5px_rgba(0,0,0)] relative">
-              <div role="rightPlayerImage" className="rightPlayerImage image h-[54px] rounded-full absolute top-0 w-[100%] image-center mt-[-27px]"/>
+          <div role="rightPlayer" className="flex md:h-[9.77vh] lg:px-0 lg:flex-col md:flex-row md:px-[4vh] lg:justify-center md:justify-between lg:w-[9.8vw] md:w-[26.56vh] md:items-center lg:h-[17.8vh] aspect-[141/160] lg:ml-[60px] bg-white rounded-3xl shadow-[0_3px_0_5px_rgba(0,0,0)] relative lg:order-last md:order-first md:ml-auto">
+              <div role="rightPlayerImage" className="rightPlayerImage image h-[54px] rounded-full absolute lg:top-0 lg:left-[50%] lg:translate-x-[-50%] w-[54px] image-center md:right-[-10%] md:mt-auto lg:mt-[-15%]"/>
 
-              <p className="text-center text-HeadingSm">PLAYER 2</p>
+              <p className="text-center text-HeadingSm lg:order-first md:order-2">PLAYER 2</p>
               <p className="text-center text-HeadingLg">{playerTwoScoreView}</p>
           </div>
         </div>
