@@ -16,6 +16,27 @@
     }
 }
 
+@keyframes bounceIn{
+    0%{
+        transform: translateY(-20vh)
+    }
+    25%{
+        transform: translateY(0%)
+    }
+    50%{
+        transform: translate(0%, -10%)
+    }
+    70%{
+        transform: translateY(0%)
+    }
+    90%{
+        transform: translateY(-5%)
+    }
+    100%{
+        transform: translateY(0%)
+    }
+}
+
 body{
     font-family: "Space Grotesk Medium"
 }
@@ -115,6 +136,11 @@ body{
 }
 .row-6{
     margin-top: .8vh;
+}
+
+.bounceAnimation{
+    animation: bounceIn 1s ease-in-out;
+
 }
 
 .winningBox{

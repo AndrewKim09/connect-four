@@ -18,9 +18,34 @@ export const PlayVsPlayer = () => {
   const [timer, setTimer] = useState("15s");
   const MAXTIME = 15;
   var piecesPlayed = 0;
+  const [startTimer, setStartTimer] = useState(0);
+
+
+
+
+  const timerFunction = () => {
+    timePassed += 1;
+      setTimer("" + ( MAXTIME - timePassed) + "s")
+
+      if(timePassed > 15){
+        switchTurns();
+      }
+    }
+
+  const pauseTimer = () => {
+    clearInterval(startTimer);
+  }
   
   const onMenuClick = () => {
     pause = !pause;
+    
+    if(pause){
+      pauseTimer()
+    }
+    else{
+      setStartTimer(setInterval(timerFunction, 1000));
+    }
+
     $(".pauseMenuBackground").toggleClass("hidden");
     setPauseMenu(true);
   }
@@ -28,11 +53,13 @@ export const PlayVsPlayer = () => {
   const onContinue = () => {
     pause = false;
     $(".pauseMenuBackground").toggleClass("hidden");
+    setStartTimer(setInterval(timerFunction, 1000));
     setPauseMenu(false);
   }
 
   const onRestart = () => {
     resetBoard();
+    setStartTimer(setInterval(timerFunction, 1000));
     setPauseMenu(false);
   }
 
@@ -57,7 +84,6 @@ export const PlayVsPlayer = () => {
         $(".turn").removeClass("yellowTurnBackground")
       }
       
-    console.log("finding winning pieces")
     for(let i = 0; i < pieces.length - 3; i++){
       if(pieces.slice(i, i+4).every((piece) => piece.hasClass(redTurn ? "red" : "yellow") == redTurn == bool)){
         for(let j = i; j < i+4; j++){
@@ -72,6 +98,7 @@ export const PlayVsPlayer = () => {
 
   const resetBoard = () => {
     $(".pieces").children().each(function() {
+      $(this).removeClass("bounceAnimation");
       $(this).removeClass("red")
       $(this).removeClass("yellow")
       $(this).addClass("empty")
@@ -118,8 +145,6 @@ export const PlayVsPlayer = () => {
   }
 
   const checkWin = () => {
-    console.log("checking for win");
-    console.log(redTurn ? "red" : "yellow")
     var horizontalPieces = []
     var horizontalString =""
     var verticalPieces = []
@@ -161,11 +186,6 @@ export const PlayVsPlayer = () => {
       count++;
     }
 
-    console.log(horizontalPieces);
-    console.log(verticalPieces);
-    console.log(diagonalPieces);
-    console.log(secondDiagonalPieces);
-
     for(let i = 0; i < 7; i++){
       horizontalString += horizontalPieces[i].hasClass(redTurn ? "red" : "yellow") == redTurn;
       if(i < 6)
@@ -184,7 +204,6 @@ export const PlayVsPlayer = () => {
 
     if(redTurn){
       if(horizontalString.includes("true".repeat(4)) || verticalString.includes("true".repeat(4)) || diagonalString.includes("true".repeat(4)) || secondDiagonalString.includes("true".repeat(4))){
-        console.log("WINNER")
         setPlayerTurnText("PLAYER 1")
         setTimer("WINS");
         $(".bottomColor").removeClass("bg-darkPurple")
@@ -213,7 +232,6 @@ export const PlayVsPlayer = () => {
 
     else{
       if(horizontalString.includes("false".repeat(4)) || verticalString.includes("false".repeat(4)) || diagonalString.includes("false".repeat(4)) || secondDiagonalString.includes("false".repeat(4))){
-        console.log("WINNER")
           setPlayerTurnText("PLAYER 2")
           setTimer("WINS");
           $(".bottomColor").removeClass("bg-darkPurple")
@@ -245,13 +263,10 @@ export const PlayVsPlayer = () => {
 
   const switchTurns = () => {
     redTurn = !redTurn;
-    console.log(redTurn)
-    console.log("Switching turns")
     timePassed = 0;
     setTimer("15s")
     if(!pause){
       if(redTurn){
-        console.log("Switching to red")
         $(".picker").each(function() {
           $(this).removeClass("yellowPicker")
           $(this).addClass("redPicker")
@@ -261,7 +276,6 @@ export const PlayVsPlayer = () => {
         setPlayerTurnText("PLAYER 1'S TURN")
       }
       else{
-        console.log("Switching to yellow")
         $(".picker").each(function() {
           $(this).removeClass("redPicker")
           $(this).addClass("yellowPicker")
@@ -280,17 +294,7 @@ export const PlayVsPlayer = () => {
 
     $(document).ready(function() {
 
-      setInterval(function() { //TIMER
-
-        if(!pause){
-          timePassed += 1;
-          setTimer("" + ( MAXTIME - timePassed) + "s")
-  
-          if(timePassed > 15){
-            switchTurns();
-          }
-        }
-      }, 1000)
+      setStartTimer(setInterval(timerFunction, 1000));
 
       $(".frontPieces").children().each(function() {
         const column = $(this).attr("column")
@@ -312,6 +316,7 @@ export const PlayVsPlayer = () => {
           for(let i = 1; i < 7; i++){
             if($(".row-"+i+".col-"+column).hasClass("empty")){
               $(".row-"+i+".col-"+column).removeClass("empty")
+              $(".row-"+i+".col-"+column).addClass("bounceAnimation");
               $(".row-"+i+".col-"+column).addClass(redTurn ? "red" : "yellow");
 
               lastMove = {
@@ -332,10 +337,6 @@ export const PlayVsPlayer = () => {
 
       $(".playAgainBox").on("click", function() {
         resetBoard();
-      })
-
-      $(".menu").on("click", function() {
-        console.log("menu")
       })
 
       $(".restart").on("click", function() {  

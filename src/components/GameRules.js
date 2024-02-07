@@ -14,7 +14,6 @@ export const GameRules = () => {
         <div className="flex flex-col justify-between px-7">
             <p className='text-HeadingSm text-lightPurple'>OBJECTIVE</p>
             <p className="text-black mt-[1.78vh] text-paragraph">Be the first player to connect 4 of the same colored discs in a row (either vertically, horizontally, or diagonally).</p>
-
             <p className="text-HeadingSm text-lightPurple mt-[3.56vh]">HOW TO PLAY</p>
             <div className="flex mt-[1.78vh]"><b className="mr-4 font-bold text-paragraph">1</b><span>Red goes first in the first game.</span></div>
             <div className="flex mt-[1.22vh]"><b className="mr-4 font-bold text-paragraph">2</b><span>Players must alternate turns, and only one disc can be dropped in each turn. </span></div>
