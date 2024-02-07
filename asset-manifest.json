@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/connect-four/static/css/main.8218b865.css",
-    "main.js": "/connect-four/static/js/main.da8bf82d.js",
+    "main.css": "/connect-four/static/css/main.74e0b21c.css",
+    "main.js": "/connect-four/static/js/main.e73dfb1b.js",
     "static/media/SpaceGrotesk-VariableFont_wght.ttf": "/connect-four/static/media/SpaceGrotesk-VariableFont_wght.1036357b9651eff7d3dd.ttf",
     "static/media/board-layer-black-large.svg": "/connect-four/static/media/board-layer-black-large.33490574022d850673c1.svg",
     "static/media/board-layer-white-large.svg": "/connect-four/static/media/board-layer-white-large.8d1e0d20b4249f8a7e07.svg",
@@ -17,11 +17,11 @@
     "static/media/marker-yellow.svg": "/connect-four/static/media/marker-yellow.a8ee5c49c251b26a543f.svg",
     "static/media/icon-check.svg": "/connect-four/static/media/icon-check.09edb9dc6d34aac5a1b0.svg",
     "index.html": "/connect-four/index.html",
-    "main.8218b865.css.map": "/connect-four/static/css/main.8218b865.css.map",
-    "main.da8bf82d.js.map": "/connect-four/static/js/main.da8bf82d.js.map"
+    "main.74e0b21c.css.map": "/connect-four/static/css/main.74e0b21c.css.map",
+    "main.e73dfb1b.js.map": "/connect-four/static/js/main.e73dfb1b.js.map"
   },
   "entrypoints": [
-    "static/css/main.8218b865.css",
-    "static/js/main.da8bf82d.js"
+    "static/css/main.74e0b21c.css",
+    "static/js/main.e73dfb1b.js"
   ]
 }
