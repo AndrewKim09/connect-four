@@ -32,7 +32,7 @@ module.exports = {
 
         paragraph: ["16px", {
           lineHeight: "21px",
-          fontWeight: "normal",
+          fontWeight: "medium",
         }],
       }
     },},
