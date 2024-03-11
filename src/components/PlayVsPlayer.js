@@ -61,6 +61,9 @@ export const PlayVsPlayer = () => {
     resetBoard();
     setStartTimer(setInterval(timerFunction, 1000));
     setPauseMenu(false);
+    setPlayerOneScoreView(0);
+    setPlayerTwoScoreView(0);
+    $(".pauseMenuBackground").toggleClass("hidden");
   }
 
   const onMainMenu = () => {
