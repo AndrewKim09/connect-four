@@ -1,6 +1,6 @@
-# Getting Started with Create React App
+# Visit the website here
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+[This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).](https://andrewkim09.github.io/connect-four/)
 
 ## Available Scripts
 
